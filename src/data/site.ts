@@ -13,7 +13,7 @@ export const site: SiteContent = {
     title: 'LOOP 3D Studio · Impressão 3D',
     description:
       'Produtos personalizados, brindes, peças técnicas, decoração e comunicação visual em impressão 3D. Estúdio em João Pessoa, Paraíba.',
-    url: '',
+    url: 'https://loop-3d-studio.vercel.app/',
     image: 'og-image.png',
     imageAlt: 'Logo da LOOP 3D Studio com o slogan Sua ideia em 3D.',
   },

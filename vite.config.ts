@@ -13,6 +13,39 @@ function resolveBase(): string {
   return withLead.endsWith('/') ? withLead : `${withLead}/`;
 }
 
+/**
+ * Dados estruturados (schema.org) da empresa, para o Google entender nome,
+ * cidade, telefone e Instagram. Só usa campos preenchidos em site.ts.
+ */
+function businessJsonLd(url: string): string {
+  const { brand, seo, contact } = site;
+  const phone = contact.whatsapp.replace(/\D/g, '');
+  const [city, region] = contact.location.split(',').map((part) => part.trim());
+  const data: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    name: brand.name,
+    slogan: brand.slogan,
+    description: seo.description,
+    url,
+    image: new URL(seo.image.replace(/^\/+/, ''), url).href,
+  };
+  if (brand.logoFull) data.logo = new URL(brand.logoFull.src.replace(/^\/+/, ''), url).href;
+  if (phone) data.telephone = `+${phone}`;
+  if (city) {
+    data.address = {
+      '@type': 'PostalAddress',
+      addressLocality: city,
+      ...(region ? { addressRegion: region } : {}),
+      addressCountry: 'BR',
+    };
+    data.areaServed = city;
+  }
+  if (/^https:\/\//.test(contact.instagram)) data.sameAs = [contact.instagram];
+  // "<" escapado para o JSON não fechar a tag <script> por engano.
+  return `<script type="application/ld+json">${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
+}
+
 const escapeHtml = (s: string) =>
   s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
@@ -40,7 +73,8 @@ function siteMeta(): Plugin {
         `<meta name="twitter:title" content="${escapeHtml(seo.title)}" />`,
         `<meta name="twitter:description" content="${escapeHtml(seo.description)}" />`,
       ];
-      // og:url e og:image exigem endereço absoluto: só entram quando seo.url estiver preenchido.
+      // og:url, og:image e os dados estruturados exigem endereço absoluto:
+      // só entram quando seo.url estiver preenchido.
       if (url) {
         const image = new URL(seo.image.replace(/^\/+/, ''), url).href;
         tags.push(
@@ -51,6 +85,7 @@ function siteMeta(): Plugin {
           `<meta property="og:image:height" content="630" />`,
           `<meta property="og:image:alt" content="${escapeHtml(seo.imageAlt)}" />`,
           `<meta name="twitter:image" content="${escapeHtml(image)}" />`,
+          businessJsonLd(url),
         );
       }
       return html.replace('<!--site-meta-->', tags.join('\n    '));

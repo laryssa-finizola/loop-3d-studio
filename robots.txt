@@ -1,0 +1,6 @@
+# Permite que buscadores leiam todo o site.
+User-agent: *
+Allow: /
+
+# Se mudar o endereço do site (ex.: domínio próprio), atualize esta linha e o sitemap.xml.
+Sitemap: https://loop-3d-studio.vercel.app/sitemap.xml
