@@ -1,0 +1,639 @@
+/* ==========================================================================
+   Cabeçalho
+   ========================================================================== */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(8, 8, 11, 0.86);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--line);
+}
+
+.header__bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: var(--header-h);
+}
+
+.brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  text-decoration: none;
+  flex: none;
+}
+
+.brand__logo {
+  width: auto;
+  height: 2.6rem;
+}
+
+.brand--full .brand__logo {
+  height: auto;
+  width: 13rem;
+}
+
+@media (max-width: 59.99em) {
+  .brand--compact .brand__logo {
+    height: 2.3rem;
+  }
+}
+
+.brand__wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.45em;
+  font-family: var(--font-display);
+  line-height: 1;
+}
+
+.brand__primary {
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+}
+
+.brand__secondary {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--muted);
+}
+
+.header__nav {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header__nav ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.header__nav li a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 0.85rem;
+  border-radius: 999px;
+  color: var(--muted);
+  font-size: 0.975rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 150ms var(--ease), background-color 150ms var(--ease);
+}
+
+.header__nav li a:hover {
+  color: var(--text);
+  background: rgba(245, 245, 247, 0.06);
+}
+
+.header__cta {
+  min-height: 2.75rem;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.975rem;
+}
+
+.header__toggle {
+  display: none;
+}
+
+@media (max-width: 59.99em) {
+  .js .header__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 44px;
+    padding: 0.5rem 1rem 0.5rem 0.8rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: transparent;
+    font-weight: 600;
+    cursor: pointer;
+  }
+
+  .header__toggle svg {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  /* Sem JavaScript, os links ficam sempre visíveis. */
+  html:not(.js) .header__bar {
+    flex-wrap: wrap;
+    padding-block: 0.5rem;
+  }
+
+  .js .header__nav {
+    position: absolute;
+    inset: 100% 0 auto 0;
+    display: none;
+    padding: 0.5rem var(--gutter) 1.5rem;
+    background: var(--bg);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.8);
+  }
+
+  .js .header.is-open .header__nav {
+    display: block;
+  }
+
+  .js .header__nav ul {
+    flex-direction: column;
+  }
+
+  .js .header__nav li a {
+    display: flex;
+    width: 100%;
+    padding: 0.95rem 0.25rem;
+    border-radius: 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--text);
+    font-family: var(--font-display);
+    font-size: 1.3rem;
+  }
+
+  .js .header__cta {
+    width: 100%;
+    margin-top: 1.25rem;
+    min-height: 3.25rem;
+  }
+}
+
+/* ==========================================================================
+   Abertura
+   ========================================================================== */
+.hero {
+  position: relative;
+  padding-block: clamp(2.5rem, 1rem + 5vw, 4.5rem) clamp(3.5rem, 2rem + 4vw, 6rem);
+}
+
+.hero__grid {
+  display: grid;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.hero__copy {
+  position: relative;
+  z-index: 2;
+}
+
+.hero__kicker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.5rem;
+  color: var(--muted);
+  font-size: 0.975rem;
+  font-weight: 500;
+}
+
+/* Um fio de filamento com as cores do infinito. */
+.hero__kicker::before {
+  content: '';
+  width: 2rem;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--grad);
+}
+
+.hero__title {
+  font-size: var(--fs-display);
+  font-weight: 600;
+  line-height: 0.94;
+  letter-spacing: -0.045em;
+}
+
+.hero__title-main,
+.hero__title-sub {
+  display: block;
+}
+
+/* “Camada por camada.” desenhado em faixas horizontais, como as linhas de uma impressão. */
+.hero__title-sub {
+  margin-top: 0.3em;
+  font-size: 0.56em;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .hero__title-sub {
+    color: transparent;
+    background-image: repeating-linear-gradient(
+      180deg,
+      var(--text) 0,
+      var(--text) 0.068em,
+      transparent 0.068em,
+      transparent 0.09em
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    /* Evita que as faixas sumam no recorte de algumas fontes. */
+    padding-bottom: 0.06em;
+  }
+}
+
+.hero__desc {
+  max-width: 40ch;
+  margin-top: 1.75rem;
+  color: var(--muted);
+  font-size: var(--fs-lead);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+.hero__visual {
+  position: relative;
+  z-index: 1;
+  min-width: 0;
+}
+
+@media (max-width: 37.5em) {
+  .hero__title-sub {
+    font-size: 0.7em;
+  }
+}
+
+@media (min-width: 60em) {
+  .hero__grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    gap: 0;
+    min-height: min(calc(100svh - var(--header-h) - 3rem), 860px);
+  }
+
+  .hero__visual {
+    margin-left: -14%;
+    margin-right: calc(var(--gutter) * -0.5);
+  }
+}
+
+@media (max-width: 59.99em) {
+  .hero__visual {
+    max-width: 30rem;
+    width: 100%;
+    margin-inline: auto;
+  }
+}
+
+/* ==========================================================================
+   Vaso em camadas
+   ========================================================================== */
+.vase {
+  margin: 0;
+}
+
+.vase__stage {
+  position: relative;
+  width: 100%;
+  max-width: calc(min(63svh, 660px) * 560 / 680);
+  margin-inline: auto;
+  aspect-ratio: 560 / 680;
+}
+
+@media (max-width: 59.99em) {
+  .vase__stage {
+    max-width: calc(min(52svh, 520px) * 560 / 680);
+  }
+}
+
+.vase__svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.vase__ghost {
+  transition: opacity 700ms var(--ease);
+}
+
+/* Depois da formação, o contorno-guia sai: a peça já está completa e girando. */
+.vase:not(.is-intro) .vase__ghost {
+  opacity: 0;
+}
+
+.vase__ghost path {
+  fill: none;
+  stroke: rgba(245, 245, 247, 0.1);
+  stroke-width: 1;
+}
+
+.vase__ghost .vase__outline {
+  stroke: rgba(245, 245, 247, 0.38);
+  stroke-dasharray: 3 5;
+}
+
+.vase__seam {
+  fill: none;
+  stroke: rgba(0, 0, 0, 0.32);
+  stroke-width: 0.9;
+}
+
+.vase__sheen {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 0.8;
+}
+
+.vase__ruler line {
+  stroke: rgba(245, 245, 247, 0.26);
+  stroke-width: 1;
+}
+
+.vase__marker {
+  fill: var(--cyan);
+}
+
+.vase__nozzle {
+  opacity: 0;
+}
+
+.vase__filament {
+  stroke: rgba(245, 245, 247, 0.5);
+  stroke-width: 2.5;
+}
+
+.vase__sink {
+  fill: #252532;
+  stroke: rgba(255, 255, 255, 0.16);
+}
+
+.vase__block {
+  fill: #343445;
+  stroke: rgba(255, 255, 255, 0.22);
+}
+
+.vase__tip {
+  fill: #c8a04f;
+}
+
+.vase__melt {
+  fill: var(--cyan);
+}
+
+/* Entrada: a peça se forma uma vez, camada por camada, sem bloquear textos ou botões. */
+.vase.is-intro .vase__layer {
+  animation: vase-layer-in 180ms var(--ease) both;
+  animation-delay: calc(var(--start-ms) + var(--i) * var(--layer-ms));
+}
+
+.vase.is-intro .vase__cap {
+  animation: vase-layer-in 260ms var(--ease) both;
+  animation-delay: calc(var(--start-ms) + var(--intro-ms));
+}
+
+.vase.is-intro .vase__nozzle {
+  opacity: 1;
+  animation:
+    loop-nozzle-path var(--intro-ms) linear var(--start-ms) both,
+    vase-nozzle-out 380ms var(--ease) calc(var(--start-ms) + var(--intro-ms) + 140ms) forwards;
+}
+
+@keyframes vase-layer-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes vase-nozzle-out {
+  to {
+    opacity: 0;
+  }
+}
+
+/* Controle “Gire a peça” */
+.vase__control {
+  max-width: 27rem;
+  margin: 0.25rem auto 0;
+}
+
+.vase__control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+.vase__control label {
+  font-family: var(--font-display);
+  font-weight: 600;
+}
+
+.vase__control output {
+  color: var(--muted);
+  font-size: 0.925rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.vase input[type='range'] {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  height: 44px;
+  margin: 0;
+  background: transparent;
+  cursor: pointer;
+  touch-action: pan-y;
+}
+
+.vase input[type='range']::-webkit-slider-runnable-track {
+  height: 6px;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, transparent var(--pct), #2a2a36 var(--pct)),
+    var(--grad);
+}
+
+.vase input[type='range']::-moz-range-track {
+  height: 6px;
+  border-radius: 6px;
+  background:
+    linear-gradient(90deg, transparent var(--pct), #2a2a36 var(--pct)),
+    var(--grad);
+}
+
+.vase input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 26px;
+  height: 26px;
+  margin-top: -10px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 5px solid var(--bg);
+  box-shadow: 0 0 0 1.5px rgba(245, 245, 247, 0.7);
+  transition: box-shadow 150ms var(--ease);
+}
+
+.vase input[type='range']::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--text);
+  border: 5px solid var(--bg);
+  box-shadow: 0 0 0 1.5px rgba(245, 245, 247, 0.7);
+}
+
+.vase input[type='range']:focus-visible {
+  outline: none;
+}
+
+.vase input[type='range']:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 3px var(--cyan);
+}
+
+.vase input[type='range']:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 3px var(--cyan);
+}
+
+/* ==========================================================================
+   Abertura em 3D (WebGL)
+   ========================================================================== */
+
+/* Sem WebGL 2 (ou sem JavaScript), aparece a versão em SVG. */
+html:not(.webgl) .printer3d {
+  display: none;
+}
+
+html.webgl .hero-fallback {
+  display: none;
+}
+
+.printer3d__stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  max-height: 64svh;
+  margin-inline: auto;
+}
+
+.printer3d__canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 900ms var(--ease);
+  cursor: grab;
+  /* Permite rolar a página na vertical; o arrasto horizontal gira a peça. */
+  touch-action: pan-y;
+  /* Bordas suaves nos quatro lados para a cena se fundir ao fundo da página. */
+  -webkit-mask-image:
+    linear-gradient(to right, transparent 0, #000 16%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 84%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(to right, transparent 0, #000 16%, #000 90%, transparent 100%),
+    linear-gradient(to bottom, transparent 0, #000 12%, #000 84%, transparent 100%);
+  mask-composite: intersect;
+}
+
+.printer3d__canvas:active {
+  cursor: grabbing;
+}
+
+.printer3d__stage[data-ready='true'] .printer3d__canvas {
+  opacity: 1;
+}
+
+/* Anel de progresso da impressão */
+.printer3d__ring {
+  position: absolute;
+  right: 4%;
+  bottom: 6%;
+  display: grid;
+  place-items: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  background: rgba(8, 8, 11, 0.72);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  box-shadow: 0 0 0 1px var(--line);
+  opacity: 0;
+  transition: opacity 600ms var(--ease) 300ms;
+}
+
+.printer3d__stage[data-ready='true'] .printer3d__ring {
+  opacity: 1;
+}
+
+.printer3d__ring svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.printer3d__ring circle {
+  fill: none;
+  stroke-width: 4;
+}
+
+.printer3d__ring-track {
+  stroke: rgba(245, 245, 247, 0.12);
+}
+
+.printer3d__ring-bar {
+  stroke-linecap: round;
+}
+
+.printer3d__pct {
+  margin-top: -0.55rem;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.printer3d__status {
+  position: absolute;
+  bottom: 1.35rem;
+  color: var(--muted);
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+
+.printer3d__ring.is-done .printer3d__status {
+  color: var(--cyan);
+}
+
+@media (min-width: 60em) {
+  .printer3d__stage {
+    width: calc(100% + var(--gutter));
+    max-height: none;
+    aspect-ratio: auto;
+    height: min(70svh, 700px);
+    margin-right: calc(-1 * var(--gutter));
+  }
+
+  .printer3d .vase__control {
+    margin-top: -0.5rem;
+  }
+
+  .printer3d__ring {
+    right: calc(var(--gutter) + 0.5rem);
+  }
+}

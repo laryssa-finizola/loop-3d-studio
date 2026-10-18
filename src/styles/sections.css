@@ -1,0 +1,834 @@
+/* ==========================================================================
+   Criações (vitrine)
+   ========================================================================== */
+.showcase__head,
+.process__head {
+  display: grid;
+  gap: 1.25rem 3rem;
+  margin-bottom: clamp(2.5rem, 1.5rem + 3vw, 4.5rem);
+}
+
+@media (min-width: 60em) {
+  .showcase__head,
+  .process__head {
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    align-items: end;
+  }
+
+  .showcase__head .lead,
+  .process__head .lead {
+    padding-bottom: 0.4rem;
+  }
+}
+
+.showcase__body {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.showcase__tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.showcase__tab {
+  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  min-height: 44px;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--muted);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color 150ms var(--ease),
+    background-color 150ms var(--ease),
+    border-color 150ms var(--ease);
+}
+
+.showcase__tab-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 0.975rem;
+  line-height: 1.25;
+}
+
+.showcase__tab-count {
+  display: none;
+  font-size: 0.85rem;
+}
+
+.showcase__tab:hover {
+  color: var(--text);
+  border-color: rgba(245, 245, 247, 0.4);
+}
+
+.showcase__tab[aria-selected='true'] {
+  color: var(--bg);
+  background: var(--text);
+  border-color: var(--text);
+}
+
+.showcase__panel {
+  position: relative;
+  display: grid;
+  gap: 1.25rem;
+  min-width: 0;
+}
+
+/* Área da peça: lembra a mesa de impressão, com grade discreta. */
+.showcase__stage {
+  position: relative;
+  aspect-ratio: 480 / 380;
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 30% 20%, rgba(124, 58, 237, 0.1), transparent 60%),
+    repeating-linear-gradient(0deg, rgba(245, 245, 247, 0.035) 0 1px, transparent 1px 36px),
+    repeating-linear-gradient(90deg, rgba(245, 245, 247, 0.035) 0 1px, transparent 1px 36px),
+    var(--surface);
+  border: 1px solid var(--line);
+}
+
+.showcase__media {
+  position: absolute;
+  inset: 4% 3% 2%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.showcase__stage.has-photo .showcase__media {
+  inset: 5%;
+}
+
+/* No celular, fotos verticais ganham uma área mais alta. */
+.showcase__stage.has-photo {
+  aspect-ratio: 4 / 5;
+}
+
+.showcase__img {
+  width: 100%;
+  height: 100%;
+}
+
+/* Fotos reais: a peça fica “apoiada” na mesa, com cantos arredondados e sombra. */
+.showcase__img.is-photo {
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: var(--radius-m);
+  box-shadow:
+    0 2px 0 rgba(255, 255, 255, 0.06) inset,
+    0 28px 50px -24px rgba(0, 0, 0, 0.95);
+  background: var(--surface-2);
+}
+
+.showcase__badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  padding: 0.35rem 0.75rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: rgba(8, 8, 11, 0.72);
+  color: var(--text);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.3;
+}
+
+.showcase__info {
+  display: grid;
+  gap: 1.1rem;
+  align-content: start;
+}
+
+.showcase__cat-desc {
+  color: var(--muted);
+  font-size: 0.975rem;
+}
+
+.showcase__piece h3 {
+  font-size: var(--fs-h3);
+}
+
+.showcase__piece p {
+  margin-top: 0.4rem;
+  color: var(--muted);
+}
+
+.showcase__thumbs {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 4.75rem));
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.thumb {
+  display: block;
+  cursor: pointer;
+}
+
+.thumb__box {
+  display: block;
+  aspect-ratio: 3 / 4;
+  border-radius: var(--radius-s);
+  border: 1px solid var(--line);
+  background: var(--surface-2);
+  overflow: hidden;
+  transition:
+    border-color 150ms var(--ease),
+    opacity 150ms var(--ease);
+  opacity: 0.72;
+}
+
+.thumb__img {
+  width: 100%;
+  height: 100%;
+}
+
+.thumb__img.is-photo {
+  object-fit: cover;
+}
+
+/* Ilustrações nas miniaturas: enquadra a peça no centro. */
+svg.thumb__img {
+  transform: scale(1.35);
+}
+
+.thumb:hover .thumb__box {
+  border-color: rgba(245, 245, 247, 0.4);
+  opacity: 1;
+}
+
+.thumb input:checked + .thumb__box {
+  border-color: var(--cyan);
+  box-shadow: inset 0 0 0 1px var(--cyan);
+  opacity: 1;
+}
+
+.thumb input:focus-visible + .thumb__box {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.showcase__cta {
+  justify-self: start;
+}
+
+/* Troca de peça: transição curta. */
+.showcase__media {
+  animation: stage-in 340ms var(--ease) both;
+}
+
+.showcase__piece {
+  animation: piece-in 260ms var(--ease) both;
+}
+
+@keyframes stage-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.975);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes piece-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (min-width: 60em) {
+  .showcase__body {
+    grid-template-columns: minmax(13rem, 3fr) minmax(0, 9fr);
+    gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: start;
+  }
+
+  .showcase__tabs {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0.25rem;
+  }
+
+  .showcase__tab {
+    width: 100%;
+    padding: 0.95rem 1rem 0.95rem 1.35rem;
+    border: 0;
+    border-radius: var(--radius-m);
+  }
+
+  .showcase__tab::before {
+    content: '';
+    position: absolute;
+    left: 0.35rem;
+    top: 0.9rem;
+    bottom: 0.9rem;
+    width: 3px;
+    border-radius: 3px;
+    background: linear-gradient(180deg, var(--cyan), var(--blue), var(--violet), var(--magenta));
+    transform: scaleY(0);
+    transition: transform 220ms var(--ease);
+  }
+
+  .showcase__tab-name {
+    font-size: 1.2rem;
+  }
+
+  .showcase__tab-count {
+    display: block;
+  }
+
+  .showcase__tab:hover {
+    background: rgba(245, 245, 247, 0.03);
+  }
+
+  .showcase__tab[aria-selected='true'] {
+    color: var(--text);
+    background: var(--surface);
+  }
+
+  .showcase__tab[aria-selected='true']::before {
+    transform: scaleY(1);
+  }
+
+  /* A peça ocupa a área grande; o texto se sobrepõe ao canto, criando profundidade. */
+  .showcase__panel {
+    display: block;
+  }
+
+  .showcase__stage,
+  .showcase__stage.has-photo {
+    aspect-ratio: auto;
+    height: clamp(28rem, 44vw, 38rem);
+  }
+
+  .showcase__media,
+  .showcase__stage.has-photo .showcase__media {
+    inset: 5% 34% 5% 3%;
+  }
+
+  .showcase__info {
+    position: absolute;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    width: min(33%, 22rem);
+    padding: 1.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+    background: rgba(17, 17, 24, 0.9);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 30px 60px -30px rgba(0, 0, 0, 0.9);
+  }
+
+  .showcase__badge {
+    top: 1.25rem;
+    left: 1.25rem;
+  }
+}
+
+/* ==========================================================================
+   Como funciona
+   ========================================================================== */
+.process {
+  border-top: 1px solid var(--line);
+}
+
+.steps {
+  --num: clamp(4.5rem, 3rem + 5vw, 7.5rem);
+  position: relative;
+  display: grid;
+  gap: 2.75rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Linha que conecta as etapas. */
+.steps::before {
+  content: '';
+  position: absolute;
+  top: 0.4rem;
+  bottom: 0.4rem;
+  left: calc(var(--num) * 0.29);
+  width: 2px;
+  border-radius: 2px;
+  background: linear-gradient(180deg, var(--cyan), var(--blue), var(--violet), var(--magenta));
+  opacity: 0.6;
+  transform-origin: top;
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: calc(var(--num) * 0.8) minmax(0, 1fr);
+  column-gap: 1rem;
+  align-items: start;
+}
+
+/* O fundo do número interrompe a linha que conecta as etapas. */
+.step__num {
+  grid-row: span 2;
+  position: relative;
+  z-index: 0;
+  justify-self: start;
+  padding: 0 0.12em 0.06em 0;
+  background: var(--bg);
+  font-family: var(--font-display);
+  font-size: var(--num);
+  font-weight: 700;
+  line-height: 0.82;
+  letter-spacing: -0.06em;
+}
+
+.step__num > span {
+  color: var(--c);
+}
+
+/* Números em faixas, como camadas; cada etapa avança no gradiente da marca. */
+@supports ((-webkit-background-clip: text) or (background-clip: text)) {
+  .step__num > span {
+    color: transparent;
+    background-image: repeating-linear-gradient(
+      180deg,
+      var(--c) 0,
+      var(--c) 0.05em,
+      transparent 0.05em,
+      transparent 0.075em
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
+}
+
+.step:nth-child(1) {
+  --c: var(--cyan);
+}
+.step:nth-child(2) {
+  --c: var(--blue);
+}
+.step:nth-child(3) {
+  --c: var(--violet-text);
+}
+.step:nth-child(4) {
+  --c: var(--magenta);
+}
+
+.step__title {
+  padding-top: 0.35rem;
+  font-size: var(--fs-h3);
+}
+
+.step__text {
+  margin-top: 0.5rem;
+  color: var(--muted);
+  max-width: 34ch;
+}
+
+@media (min-width: 60em) {
+  .steps {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2rem;
+  }
+
+  .steps::before {
+    top: calc(var(--num) * 0.42);
+    bottom: auto;
+    left: 0;
+    right: 0;
+    width: auto;
+    height: 2px;
+    background: var(--grad);
+    transform-origin: left;
+  }
+
+  .step {
+    display: block;
+  }
+
+  .step__num {
+    display: inline-block;
+    padding-right: 0.18em;
+    margin-bottom: 1.75rem;
+  }
+}
+
+/* Entrada das etapas (somente quando o JS confirmou que estão fora da tela). */
+.steps[data-reveal='armed'] .step {
+  opacity: 0;
+  transform: translateY(18px);
+}
+
+.steps[data-reveal='armed']::before {
+  transform: scaleY(0);
+}
+
+.steps[data-reveal='shown'] .step {
+  transition:
+    opacity 520ms var(--ease),
+    transform 620ms var(--ease);
+  transition-delay: calc(var(--i) * 120ms + 120ms);
+}
+
+.steps[data-reveal='shown']::before {
+  transition: transform 1100ms var(--ease);
+}
+
+@media (min-width: 60em) {
+  .steps[data-reveal='armed']::before {
+    transform: scaleX(0);
+  }
+}
+
+/* Título em duas linhas equilibradas: “Como encomendar / sua peça”. */
+.process__head .section-title {
+  max-width: none;
+}
+
+/* Botão de encomenda, abaixo das etapas */
+.process__cta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 1.5rem;
+  margin-top: clamp(3rem, 2rem + 3vw, 4.5rem);
+}
+
+/* Gradiente violeta → magenta da marca; texto branco com contraste acima de 5:1. */
+.process__cta-btn {
+  min-height: 3.75rem;
+  padding: 1rem 1.9rem 1rem 1.6rem;
+  color: #fff;
+  font-size: 1.125rem;
+  background: linear-gradient(100deg, var(--violet), #b514cf);
+  box-shadow: 0 14px 40px -14px rgba(209, 11, 232, 0.65);
+}
+
+.process__cta-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 18px 44px -12px rgba(209, 11, 232, 0.8);
+}
+
+.process__cta-handle {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+@media (max-width: 30em) {
+  .process__cta-btn {
+    width: 100%;
+  }
+}
+
+/* ==========================================================================
+   Sobre
+   ========================================================================== */
+.about {
+  border-top: 1px solid var(--line);
+  padding-block: clamp(3.5rem, 2rem + 5vw, 7.5rem);
+}
+
+.about__grid {
+  display: grid;
+  gap: 1.5rem 3rem;
+}
+
+.about__title {
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 2rem);
+  color: var(--muted);
+}
+
+.about__text {
+  max-width: 34ch;
+  font-family: var(--font-display);
+  font-size: clamp(1.45rem, 1rem + 1.7vw, 2.4rem);
+  font-weight: 500;
+  line-height: 1.24;
+  letter-spacing: -0.02em;
+}
+
+.about__slogan {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-top: 1.75rem;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.about__slogan::before {
+  content: '';
+  width: 2rem;
+  height: 3px;
+  border-radius: 3px;
+  background: var(--grad);
+}
+
+.about__photo img {
+  width: 100%;
+  border-radius: var(--radius-l);
+  object-fit: cover;
+}
+
+@media (min-width: 60em) {
+  .about__grid {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 9fr);
+    align-items: start;
+  }
+
+  .about.has-photo .about__grid {
+    grid-template-columns: minmax(0, 3fr) minmax(0, 5fr) minmax(0, 4fr);
+  }
+
+  .about__title {
+    padding-top: 0.5rem;
+  }
+}
+
+/* ==========================================================================
+   Contato
+   ========================================================================== */
+.contact {
+  border-top: 1px solid var(--line);
+}
+
+.contact__grid {
+  display: grid;
+  gap: 3.5rem;
+}
+
+.contact__title {
+  max-width: 11ch;
+  font-size: clamp(2.75rem, 1.2rem + 5.8vw, 6.5rem);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+}
+
+.contact__cta .lead {
+  margin-top: 1.5rem;
+}
+
+.contact__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 2.25rem;
+}
+
+.contact__handle {
+  color: var(--muted);
+  font-weight: 500;
+}
+
+@media (max-width: 30em) {
+  .contact__actions .btn {
+    width: 100%;
+  }
+}
+
+.contact__details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.75rem;
+  margin: 1.75rem 0 0;
+  padding: 0;
+  list-style: none;
+  color: var(--muted);
+}
+
+.contact__details li {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.contact__details svg {
+  width: 1.15em;
+  height: 1.15em;
+  flex: none;
+  color: var(--cyan);
+}
+
+.dev-note {
+  max-width: 52ch;
+  margin-top: 2rem;
+  padding: 1rem 1.25rem;
+  border: 1px dashed rgba(0, 200, 248, 0.55);
+  border-radius: var(--radius-m);
+  color: var(--muted);
+  font-size: 0.925rem;
+}
+
+.dev-note code {
+  color: var(--text);
+  font-size: 0.9em;
+}
+
+.faq__title {
+  margin-bottom: 0.5rem;
+  font-size: var(--fs-h3);
+}
+
+.faq__item {
+  border-bottom: 1px solid var(--line);
+}
+
+.faq__item summary {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  min-height: 44px;
+  padding: 1.15rem 0;
+  font-family: var(--font-display);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.35;
+  list-style: none;
+  cursor: pointer;
+}
+
+.faq__item summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq__item summary:hover {
+  color: #fff;
+}
+
+.faq__icon {
+  position: relative;
+  flex: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  margin-top: 0.3em;
+}
+
+.faq__icon::before,
+.faq__icon::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  height: 2px;
+  margin-top: -1px;
+  border-radius: 2px;
+  background: var(--cyan);
+  transition: transform 200ms var(--ease);
+}
+
+.faq__icon::after {
+  transform: rotate(90deg);
+}
+
+.faq__item[open] .faq__icon::after {
+  transform: rotate(0deg);
+}
+
+.faq__item p {
+  max-width: 48ch;
+  padding-bottom: 1.25rem;
+  color: var(--muted);
+}
+
+@media (min-width: 60em) {
+  .contact__grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+    align-items: end;
+  }
+}
+
+/* ==========================================================================
+   Rodapé
+   ========================================================================== */
+.footer {
+  border-top: 1px solid var(--line);
+  padding-block: 2rem 2.5rem;
+}
+
+.footer__grid {
+  display: grid;
+  gap: 1.25rem 2rem;
+  align-items: center;
+}
+
+.footer__brand {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem 1rem;
+}
+
+.footer__brand p {
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.footer__nav ul,
+.footer__contacts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.footer__nav a,
+.footer__contacts a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
+  font-size: 0.95rem;
+  text-decoration: none;
+}
+
+.footer__contacts li {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.footer__nav a:hover,
+.footer__contacts a:hover {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 0.2em;
+}
+
+@media (min-width: 60em) {
+  .footer__grid {
+    grid-template-columns: auto 1fr auto;
+  }
+
+  .footer__nav ul {
+    justify-content: center;
+  }
+}
