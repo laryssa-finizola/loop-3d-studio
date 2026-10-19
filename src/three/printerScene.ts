@@ -12,7 +12,6 @@ import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 /* ==========================================================================
    Ajustes rápidos
    ========================================================================== */
-/** Só no desenvolvimento: ?lento=10 deixa a impressão 10× mais lenta, para inspecionar. */
 const SLOW = import.meta.env.DEV ? Number(new URLSearchParams(window.location.search).get('lento')) || 1 : 1;
 const PRINT_MS = 8000 * SLOW; // duração da impressão de demonstração
 const PARK_MS = 900; // tempo para o bico se afastar ao terminar
